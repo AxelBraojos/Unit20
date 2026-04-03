@@ -1,6 +1,6 @@
 // src/services/FuelDataParser.ts
 import * as fs from 'fs';
-import type { EstacionDeCombustible } from '../models/FuelStation.js';
+import type { EstacionDeCombustible } from '../models/estacion.js';
 
 export class AnalizadorDeDatosDeCombustible {
 

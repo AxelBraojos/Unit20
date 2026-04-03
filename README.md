@@ -5,8 +5,8 @@ combustible del ministerio de transición ecológica y genera
 estructuras de datos para su análisis. El fichero ha sido importado de este link oficial: https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/
 
 ## Requisitos
-- Node.js 18 o mas
-- npm
+Node.js 18 o mas
+npm
 
 ## Instalación
 npm install

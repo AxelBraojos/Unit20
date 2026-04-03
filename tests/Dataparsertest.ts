@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { AnalizadorDeDatosDeCombustible } from '../src/services/FuelDataParser.js';
+import { AnalizadorDeDatosDeCombustible } from '../src/services/Parser.js';
 
 describe('AnalizadorDeDatosDeCombustible', () => {
     it('debe convertir precios con separador decimal coma', () => {
