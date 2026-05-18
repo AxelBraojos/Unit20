@@ -152,6 +152,15 @@ los tests cubren aspectos como:
 Los tests se ejecutan utilizando Jest y siguen una estructura sencilla basada en Arrange, Act y Assert para mantener el código de testing más claro y fácil de entender.
 
 
+# Integración continua
+
+El proyecto utiliza GitHub Actions tal y como se ha pedido en las correcciones
+
+Esta pipeline se ejecuta automáticamente en cada push y en cada pull request. Su objetivo es instalar las dependencias del proyecto, ejecutar los tests unitarios y compilar el código TypeScript.
+
+De esta forma se valida de manera automática que los cambios realizados no rompen la funcionalidad principal del proyecto y que el código sigue compilando correctamente antes de integrarse en el repositorio.
+
+
 # Diseño de la aplicación
 
 Cada clase tiene una responsabilidad concreta para facilitar:
