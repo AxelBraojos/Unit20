@@ -1,5 +1,13 @@
 # Unit 20 AB
 
+## Nota sobre el API del Ministerio
+
+La ejecucion principal consulta directamente el API REST publico del Ministerio:
+
+https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/
+
+El analisis historico de las graficas tambien consulta el endpoint historico oficial del ultimo mes. Los ficheros de `data/` se mantienen como datos de apoyo para tests y ejemplos locales.
+
 ## Descripción del proyecto
 
 Este proyecto ha sido desarrollado como parte del Assignment Brief de la Unit 20

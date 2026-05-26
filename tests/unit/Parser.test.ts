@@ -40,4 +40,22 @@ describe("Parser", () => {
         // assert
         expect(accion).toThrow(InvalidJsonError);
     });
+
+    test("parsea la clave Direccion del API del ministerio", () => {
+        const jsonValido = JSON.stringify({
+            ListaEESSPrecio: [
+                {
+                    Provincia: "MADRID",
+                    Municipio: "Madrid",
+                    "Dirección": "Calle API",
+                    "Precio Gasoleo A": "1,459",
+                    "Precio Gasolina 95 E5": "1,579",
+                },
+            ],
+        });
+
+        const resultado = parser.parsear(jsonValido);
+
+        expect(resultado[0]?.direccion).toBe("Calle API");
+    });
 });

@@ -43,4 +43,22 @@ describe("FiltroEstacionesService", () => {
         expect(resultado).toHaveLength(1);
         expect(resultado[0]?.provincia).toBe("MADRID");
     });
+
+    test("reconoce variantes de provincia devueltas por el ministerio", () => {
+        // Arrange
+        const estaciones = [
+            new Estacion("CORUÑA (A)", "A Coruña", "Calle A", 1.40, 1.50),
+            new Estacion("A CORUÑA", "Ferrol", "Calle B", 1.45, 1.55),
+            new Estacion("LUGO", "Lugo", "Calle C", 1.50, 1.60),
+        ];
+
+        // Act
+        const resultado = filtroService.filtrarPorProvincias(
+            estaciones,
+            ["CORUÑA"]
+        );
+
+        // Assert
+        expect(resultado).toHaveLength(2);
+    });
 });

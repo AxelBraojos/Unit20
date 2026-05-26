@@ -1,16 +1,16 @@
 import { appConfig } from "./config/appConfig";
 
-import { JsonFileReader } from "./services/lectorJson";
+import { MinisterioApiReader } from "./services/MinisterioApiReader";
 import { Parser } from "./services/Parser";
 import { FiltroEstacionesService } from "./services/FiltroEstacionesService";
 import { EstadisticasService } from "./services/EstadisticasService";
 import { InformeService } from "./services/InformeService";
-import { HistorialCombustibleService } from "./services/HistorialCombustibleService";
+import { HistorialMinisterioApiService } from "./services/HistorialMinisterioApiService";
 import { AnalisisMercadoService } from "./services/AnalisisMercadoService";
 import { GraficaBarrasService } from "./services/GraficaBarrasService";
 
-try {
-    const lectorArchivo = new JsonFileReader();
+async function main(): Promise<void> {
+    const lectorApi = new MinisterioApiReader();
 
     const parser = new Parser();
 
@@ -20,16 +20,16 @@ try {
 
     const informeService = new InformeService();
 
-    const historialService = new HistorialCombustibleService(
-        lectorArchivo,
+    const historialService = new HistorialMinisterioApiService(
+        lectorApi,
         parser
     );
 
     const graficaBarrasService = new GraficaBarrasService();
 
-    // Leer fichero JSON
-    const contenidoJson = lectorArchivo.leerArchivo(
-        appConfig.rutaArchivo
+    // Leer datos actuales directamente desde el API oficial del ministerio.
+    const contenidoJson = await lectorApi.leerDatos(
+        appConfig.apiMinisterioUrl
     );
 
     // Parsear datos
@@ -83,8 +83,9 @@ try {
         topGasolinaMasCaras
     );
 
-    const historico = historialService.obtenerHistorico(
-        appConfig.rutaHistorico
+    const historico = await historialService.obtenerHistoricoUltimosDias(
+        appConfig.apiMinisterioHistoricoUrl,
+        appConfig.diasHistorico
     );
 
     const analisisMercadoService =
@@ -134,8 +135,10 @@ try {
 
     console.log("");
     console.log("Graficas generadas en output/graficas");
-} catch (error) {
+}
+
+main().catch((error) => {
     if (error instanceof Error) {
         console.error("ERROR:", error.message);
     }
-}
+});

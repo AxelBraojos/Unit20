@@ -31,6 +31,8 @@ export class Parser {
     }
 
     private obtenerDireccion(item: any): string {
-        return item["Dirección"] ?? item["DirecciÃ³n"];
+        return item["Dirección"] ??
+            item["DirecciÃ³n"] ??
+            item["DirecciÃƒÂ³n"];
     }
 }

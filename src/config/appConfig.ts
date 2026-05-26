@@ -1,4 +1,12 @@
 export const appConfig = {
+  apiMinisterioUrl:
+    "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/",
+
+  apiMinisterioHistoricoUrl:
+    "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestresHist/",
+
+  diasHistorico: 30,
+
   rutaArchivo: "./data/preciosgasolina.json",
 
   rutaHistorico: "./data/historico",

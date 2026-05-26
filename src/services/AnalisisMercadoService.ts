@@ -127,7 +127,7 @@ export class AnalisisMercadoService {
         const fechaReferencia = this.obtenerFechaReferencia();
         const fechaInicio = new Date(fechaReferencia);
         const provinciasNormalizadas = provincias.map((provincia) =>
-            provincia.toUpperCase()
+            this.normalizarProvincia(provincia)
         );
 
         // La referencia es la fecha mas reciente del historico disponible
@@ -135,21 +135,49 @@ export class AnalisisMercadoService {
 
         return this.historico.filter((precioHistorico) => {
             const fecha = this.crearFechaUtc(precioHistorico.fecha);
-            const provincia =
-                precioHistorico.estacion.provincia.toUpperCase();
+            const provincia = this.normalizarProvincia(
+                precioHistorico.estacion.provincia
+            );
 
             return fecha >= fechaInicio &&
                 fecha <= fechaReferencia &&
-                provinciasNormalizadas.includes(provincia);
+                this.coincideProvincia(provincia, provinciasNormalizadas);
         });
     }
 
+    private coincideProvincia(
+        provincia: string,
+        provincias: string[]
+    ): boolean {
+        return provincias.some((provinciaInteres) =>
+            provincia === provinciaInteres ||
+            provincia.includes(provinciaInteres) ||
+            provinciaInteres.includes(provincia)
+        );
+    }
+
+    private normalizarProvincia(provincia: string): string {
+        return provincia
+            .replace("Ã‘", "Ñ")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toUpperCase()
+            .trim();
+    }
+
     private obtenerFechaReferencia(): Date {
-        const fechas = this.historico.map((precioHistorico) =>
-            this.crearFechaUtc(precioHistorico.fecha).getTime()
+        const fechaMasReciente = this.historico.reduce(
+            (maximo, precioHistorico) => {
+                const fecha = this.crearFechaUtc(
+                    precioHistorico.fecha
+                ).getTime();
+
+                return Math.max(maximo, fecha);
+            },
+            0
         );
 
-        return new Date(Math.max(...fechas));
+        return new Date(fechaMasReciente);
     }
 
     private crearFechaUtc(fecha: string): Date {
